@@ -7,6 +7,8 @@ document.getElementById("out-out-btn").
 
 const validPin = 1234;
 const transactionsData = [];
+const bonusCoupon = "PH-BATCH-12";
+
 //function to get input values
 function getInputValueNumber(id) {
   const inputFieldValueNumber = parseInt(document.getElementById(id).value);
@@ -55,7 +57,7 @@ function handleButtonToggle(id) {
 // add money feature
 document.getElementById("add-money-btn").addEventListener('click', function (e) {
   e.preventDefault()
-  const bank = getInputValue("bank");
+  const bank = getInputValue("select-bank");
   const accountNumber = getInputValue("account-number");
   const amount = getInputValueNumber("add-amount");
   if (amount <= 0) {
@@ -66,13 +68,20 @@ document.getElementById("add-money-btn").addEventListener('click', function (e) 
   const availableBalance = getInnerText("available-balance");
 
   
+if (bank === "") {
+  alert("⚠️ Please select a bank!");
+  return;
+} 
+
  if (accountNumber.length < 11) {
    alert('Please enter valid account number.')
    return;
   } 
   if (pin !== validPin) {
-    alert('Please Enter Valid Pin.')
+    alert('Please Enter Valid Pin.');
+    return;
   }
+
   const totalNewAvailableBalance = amount + availableBalance;
 
    setInnerText(totalNewAvailableBalance);
@@ -82,7 +91,13 @@ document.getElementById("add-money-btn").addEventListener('click', function (e) 
     date: new Date().toLocaleDateString()
   }
   transactionsData.push(data);
-  console.log(transactionsData);
+
+  alert(`✅ Money added successfully! New balance: ${totalNewAvailableBalance}`);
+
+    document.getElementById("select-bank").value = "";
+    document.getElementById("account-number").value = "";
+    document.getElementById("add-amount").value = "";
+    document.getElementById("add-pin").value = "";
 });
 
 //cash out feature
@@ -91,11 +106,24 @@ document.getElementById("Withdraw-btn").
     e.preventDefault()
     const amount = getInputValueNumber("withdraw-amount");
     const availableBalance = getInnerText("available-balance");
-
-    if (amount <= 0 || amount > availableBalance) {
+    const agentNumber = getInputValue("agent-number");
+    const pin = getInputValueNumber("cash-out-pin");
+    
+      if (agentNumber.length < 11 || isNaN(agentNumber) || agentNumber === '') {
+        alert("Please enter valid account number.");
+        return;
+      } 
+    
+    if (amount <= 0 || amount > availableBalance || isNaN(amount)) {
       alert("Invalid Amount")
       return;
     }
+
+    if (pin !== validPin) {
+      alert("Please Enter Valid Pin.");
+      return;
+    }
+
     let totalNewAvailableBalance = availableBalance - amount;
 
     setInnerText(totalNewAvailableBalance);
@@ -105,10 +133,60 @@ document.getElementById("Withdraw-btn").
     date: new Date().toLocaleDateString()
   }
   transactionsData.push(data);
-    console.log(transactionsData);
+
+      alert(
+        `✅ Cash Out successful! New balance: ${totalNewAvailableBalance}`
+      );
+
+      document.getElementById("agent-number").value = "";
+      document.getElementById("withdraw-amount").value = "";
+      document.getElementById("cash-out-pin").value = "";
 });
 
 
+// transfer money feature
+document.getElementById("send-money-btn").addEventListener('click', function (e) {
+  e.preventDefault();
+  const userAccountNumber = getInputValue("user-account-number");
+  const transferAmount = getInputValueNumber("transfer-amount");
+  const availableBalance = getInnerText("available-balance");
+  const pin = getInputValueNumber("transfer-pin");
+
+  if (userAccountNumber.length < 11 || isNaN(userAccountNumber || userAccountNumber === '')) {
+    alert("Please enter valid User Account Number.");
+    return;
+  }
+
+  if (transferAmount <= 0 || transferAmount > availableBalance ||  isNaN(transferAmount)) {
+    alert("Invalid Amount");
+    return;
+  }
+
+  if (pin !== validPin) {
+    alert("Please Enter Valid Pin.");
+    return;
+  }
+
+  let totalNewAvailableBalance = availableBalance - transferAmount;
+  setInnerText(totalNewAvailableBalance);
+
+  const data = {
+    name: "Transfer Money",
+    date: new Date().toLocaleDateString(),
+  };
+  transactionsData.push(data);
+
+  alert(
+    `✅ Transfer Money successful! New balance: ${totalNewAvailableBalance}`
+  );
+
+  document.getElementById("user-account-number").value = "";
+  document.getElementById("transfer-amount").value = "";
+  document.getElementById("transfer-pin").value = "";
+});
+
+
+// transactions feature
 
   document.getElementById("transactions-btn").addEventListener('click', function () {
     const transactionsContainer = document.getElementById("transactions-container");
@@ -133,6 +211,73 @@ document.getElementById("Withdraw-btn").
     `;
     transactionsContainer.appendChild(div)
   }
+});
+
+//get bonus feature
+document.getElementById("get-bonus-btn").addEventListener('click', function (e) {
+  e.preventDefault()
+  const inputCoupon = document.getElementById("coupon").value;
+  if (inputCoupon === bonusCoupon) {
+    alert("Cong🎉rats You get 10% bonus" );
+  }
+
+  const data = {
+    name: "Get Bonus",
+    date: new Date().toLocaleDateString(),
+  };
+  transactionsData.push(data);
+  document.getElementById("coupon").value = "";
+});
+
+
+//pay bill feature
+document.getElementById("pay-now-btn").addEventListener('click', function (e) {
+  e.preventDefault();
+  const selectBillPay = getInputValue("select-bill-pay");
+  const billerAccountNumber = getInputValue("biller-account-number");
+  const billPayAmount = getInputValueNumber("bill-pay-amount");
+  const billPayPin = getInputValueNumber("bill-pay-pin");
+  const availableBalance = getInnerText("available-balance");
+
+  if (selectBillPay === '') {
+    alert("Please select Pay option");
+    return;
+  }
+
+  if (billerAccountNumber.length < 11 || isNaN(billerAccountNumber || billerAccountNumber === '')) {
+    alert("Please enter valid User Account Number.");
+    return;
+  }
+
+  if (billPayAmount <= 0 || billPayAmount > availableBalance ||  isNaN(billPayAmount)) {
+    alert("Invalid Amount");
+    return;
+  }
+
+  if (billPayPin !== validPin) {
+    alert("Please Enter Valid Pin.");
+    return;
+  }
+
+  
+  let totalNewAvailableBalance = availableBalance - billPayAmount;
+  setInnerText(totalNewAvailableBalance);
+
+  const data = {
+    name: "Pay Bill",
+    date: new Date().toLocaleDateString(),
+  };
+  transactionsData.push(data);
+
+  alert(
+    `✅ Bill Pay successful! New balance: ${totalNewAvailableBalance}`
+  );
+
+  document.getElementById("select-bill-pay").value = "";
+  document.getElementById("biller-account-number").value = "";
+  document.getElementById("bill-pay-amount").value = "";
+  document.getElementById("bill-pay-pin").value = "";
+
 });
 
 // toggling feature

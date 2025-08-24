@@ -110,10 +110,10 @@
           <div>
             <h1 class="font-semibold">Select a bank</h1>
             <select
-              id="bank"
+              id="select-bank"
               class="select bg-[#f4f5f7] mt-3 rounded-3xl w-full"
             >
-              <option disabled selected class="text-[#08080880]">
+              <option value="" disabled selected class="text-[#08080880]">
                 Select bank
               </option>
               <option>Dhaka Bank</option>
@@ -164,13 +164,13 @@
       <div class="form" id="cash-out-parent" style="display: none">
         <h2 class="my-3 font-bold">Cash Out</h2>
         <form class="bg-white rounded-2xl p-6">
-          <div class="">
+          <div  class="">
             <label class="font-semibold" for="">Agent Number</label>
             <br />
             <input
               type="text"
               placeholder="Enter 11 digit number"
-              id="account-number"
+              id="agent-number"
               class="input bg-[#f4f5f7] mt-3 rounded-3xl w-full"
             />
           </div>
@@ -190,7 +190,7 @@
             <input
               type="text"
               placeholder="Enter 4 digit pin number"
-              id="add-pin"
+              id="cash-out-pin"
               class="input bg-[#f4f5f7] mt-3 rounded-3xl w-full"
             />
           </div>
@@ -213,7 +213,7 @@
             <input
               type="text"
               placeholder="Enter 11 digit number"
-              id="account-number"
+              id="user-account-number"
               class="input bg-[#f4f5f7] mt-3 rounded-3xl w-full"
             />
           </div>
@@ -222,8 +222,8 @@
             <br />
             <input
               type="text"
-              placeholder="Add Amount to withdraw"
-              id="withdraw-amount"
+              placeholder="Add Amount to transfer"
+              id="transfer-amount"
               class="input bg-[#f4f5f7] mt-3 rounded-3xl w-full"
             />
           </div>
@@ -233,7 +233,7 @@
             <input
               type="text"
               placeholder="Enter 4 digit pin number"
-              id="add-pin"
+              id="transfer-pin"
               class="input bg-[#f4f5f7] mt-3 rounded-3xl w-full"
             />
           </div>
@@ -256,7 +256,7 @@
             <input
               type="text"
               placeholder="Enter your coupon"
-              id="add-pin"
+              id="coupon"
               class="input bg-[#f4f5f7] mt-3 rounded-3xl w-full"
             />
           </div>
@@ -276,10 +276,10 @@
           <div>
             <h1 class="font-semibold">Select To Pay</h1>
             <select
-              id="bank"
+              id="select-bill-pay"
               class="select bg-[#f4f5f7] mt-3 rounded-3xl w-full"
             >
-              <option disabled selected class="text-[#08080880]">
+              <option value="" disabled selected class="text-[#08080880]">
                 Select bank
               </option>
               <option>Dhaka Bank</option>
@@ -293,7 +293,7 @@
             <input
               type="text"
               placeholder="Enter account number"
-              id="account-number"
+              id="biller-account-number"
               class="input bg-[#f4f5f7] mt-3 rounded-3xl w-full"
             />
           </div>
@@ -303,7 +303,7 @@
             <input
               type="text"
               placeholder="Amount to Pay"
-              id="add-amount"
+              id="bill-pay-amount"
               class="input bg-[#f4f5f7] mt-3 rounded-3xl w-full"
             />
           </div>
@@ -313,7 +313,7 @@
             <input
               type="text"
               placeholder="Enter 4 digit pin number"
-              id="add-pin"
+              id="bill-pay-pin"
               class="input bg-[#f4f5f7] mt-3 rounded-3xl w-full"
             />
           </div>
